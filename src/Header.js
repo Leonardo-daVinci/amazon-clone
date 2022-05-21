@@ -5,8 +5,12 @@ import "./Header.css";
 import SearchIcon from "@material-ui/icons/Search";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import { Link } from "react-router-dom";
+import { useStateValue } from "./StateProvider";
 
 function Header() {
+  //this is added to get the data layer - access to items added
+  const [{ basket }, dispatch] = useStateValue();
+
   return (
     <div className="header">
       <Link to="/">
@@ -39,7 +43,7 @@ function Header() {
           <div className="header_navBasket">
             <ShoppingBasketIcon />
             <span className="header_navOptionLineTwo header_navBasketCount">
-              0
+              {basket?.length}
             </span>
           </div>
         </Link>
