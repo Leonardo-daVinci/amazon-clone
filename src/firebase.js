@@ -23,3 +23,15 @@ const firebaseAuth = getAuth();
 
 //Using these in other components
 export { firebaseAuth };
+
+/*
+Steps to deploy the app 
+1. Run "fIrebase login" - takes you to browser to sign into your firebase account.
+2. Make sure firebase-tools package is installed.
+3. Run "firebase init" - select hosting and then select your project from existing projects list.
+4. What do you want to use as your public directory? - build
+5. Configure as a single-page app (rewrite all urls to /index.html)? - Yes
+6. Set up automatic builds and deploys with GitHub? No
+7. After the initialization, run "npm run build".
+8. Final step - run "firebase deploy"
+*/
