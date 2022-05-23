@@ -6,10 +6,15 @@ import SearchIcon from "@material-ui/icons/Search";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import { Link } from "react-router-dom";
 import { useStateValue } from "./StateProvider";
+import { firebaseAuth } from "./firebase";
 
 function Header() {
   //this is added to get the data layer - access to items added
-  const [{ basket }, dispatch] = useStateValue();
+  const [{ basket, user }, dispatch] = useStateValue();
+
+  const handleAuthentication = () => {
+    firebaseAuth.signOut();
+  };
 
   return (
     <div className="header">
@@ -26,10 +31,16 @@ function Header() {
       </div>
 
       <div className="header__nav">
-        <div className="header_navOption">
-          <span className="header_navOptionLineOne">Hello User</span>
-          <span className="header_navOptionLineTwo">Sign In</span>
-        </div>
+        <Link to={!user && "/login"}>
+          <div onClick={handleAuthentication} className="header_navOption">
+            <span className="header_navOptionLineOne">
+              {user ? "Hello User" : "Hello Guest"}
+            </span>
+            <span className="header_navOptionLineTwo">
+              {user ? "Sign out" : "Sign In"}
+            </span>
+          </div>
+        </Link>
         <div className="header_navOption">
           <span className="header_navOptionLineOne">Return &</span>
           <span className="header_navOptionLineTwo">Orders</span>
