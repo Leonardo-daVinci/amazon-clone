@@ -7,6 +7,8 @@ import CheckoutProduct from "./CheckoutProduct";
 import "./Payment.css";
 import { getBasketTotal } from "./reducer";
 import { useStateValue } from "./StateProvider";
+import { firebaseDB } from "./firebase";
+import { doc, setDoc } from "firebase/firestore";
 
 function Payment() {
   const [{ basket, user }, dispatch] = useStateValue();
@@ -53,6 +55,17 @@ function Payment() {
         setSucceeded(true);
         setError(null);
         setProcessing(false);
+
+        //Adding the data to the FIrestore
+        const docRef = doc(firebaseDB, "orders", paymentIntent.id);
+
+        setDoc(docRef, {
+          basket: basket,
+          user: user?.uid,
+          amount: paymentIntent.amount,
+          created: paymentIntent.created,
+          paymentID: paymentIntent.id,
+        });
 
         dispatch({
           type: "EMPTY_BASKET",
